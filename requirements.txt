@@ -51,5 +51,5 @@ typing-extensions==3.10.0.0
 ujson==4.0.2
 urllib3==1.26.6
 uvicorn==0.13.4
-watchgod==0.7
+watchdog==2.1.9
 websockets==8.1

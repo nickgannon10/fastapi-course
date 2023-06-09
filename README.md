@@ -1,5 +1,54 @@
 # Backend clone  of social media app by using FastAPI
 
+- delete and update don't require access, make them be logged in
+  - actually asked gpt if this is neccessary because it may be redundant if the non-user will
+  never see this info to change it in the first place 
+
+SetUp all Possible Paths in PostMan unless your testing can do that for for
+
+'''
+I think there is a schema issue in doctor_patient.py
+'''
+""" ChatGPT
+ Additionally, can you modify the create_doctor_patient function and the corresponding post such that it integrates the relevant information from schemas.py?
+"""
+
+
+Okay so you added all these things in ultimatley next you should test them, more 
+importantly, you should build tests for them. Doc
+
+'''
+<!-- https://github.com/daveshap/Coding_ChatBot_Assistant/blob/main/chat.py -->
+def chatbot(conversation, model="gpt-4", temperature=0):
+    max_retry = 7
+    retry = 0
+    while True:
+        try:
+            response = openai.ChatCompletion.create(model=model, messages=conversation, temperature=temperature)
+            text = response['choices'][0]['message']['content']
+            return text, response['usage']['total_tokens']
+        except Exception as oops:
+            print(f'\n\nError communicating with OpenAI: "{oops}"')
+            if 'maximum context length' in str(oops):
+                a = conversation.pop(0)
+                print('\n\n DEBUG: Trimming oldest message')
+                continue
+            retry += 1
+            if retry >= max_retry:
+                print(f"\n\nExiting due to excessive errors in API: {oops}")
+                exit(1)
+            print(f'\n\nRetrying in {2 ** (retry - 1) * 5} seconds...')
+            sleep(2 ** (retry - 1) * 5)
+'''
+
+- Maybe put some more constraints on password and username ex: at least 8 characters 
+
+
+make mirgrations 
+  - docker-compose -f docker-compose-dev.yml run app alembic revision --autogenerate -m "New Migration"
+  - docker-compose -f docker-compose-dev.yml run app alembic upgrade head
+docker-compose build docker-compose up
+
 #### This API  has 4 routes
 
 ## 1) Post route
@@ -78,3 +127,5 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 60(base)
   <a href="https://www.youtube.com/watch?v=Yw4LmMQXXFs&list=PL8VzFQ8k4U1L5QpSapVEzoSfob-4CR8zM&index=2">
     <img src="https://freshidea.com/jonah/youtube-api/subscribers-badge.php?label=Subscribers&style=for-the-badge&color=red&labelColor=ce4630" alt="youtube Badge"/>
   </a>
+
+

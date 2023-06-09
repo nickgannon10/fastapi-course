@@ -6,7 +6,8 @@ from .. import database, schemas, models, utils, oauth2
 
 router = APIRouter(tags=['Authentication'])
 
-
+# the information that is returned should be compliant with schemas.Token
+# the information that serves as the input should be compliant with OAuth2PasswordRequestForm
 @router.post('/login', response_model=schemas.Token)
 def login(user_credentials: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(database.get_db)):
 
